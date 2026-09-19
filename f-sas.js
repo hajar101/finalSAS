@@ -92,11 +92,7 @@ function rechercherApprenant(nom) {
 
     for (let i = 0; i < apprenants.length; i++) {
 
-        if (
-            apprenants[i].nomComplet
-                .toLowerCase()
-                .includes(nom.toLowerCase())
-        ) {
+        if (apprenants[i].nomComplet.includes(nom.toLowerCase())) {
             resultat.push(apprenants[i]);
         }
     }
