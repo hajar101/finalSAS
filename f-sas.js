@@ -9,16 +9,20 @@ function normaliserNom(nom) {
 function validerResultat(jour, exercicesTermines, totalExercices, challengeTermine) {
 
     if (jour < 1 || jour > 7) {
+        console.log("(┬┬﹏┬┬) le jour doit etre entre 1 et 7")
         return false;
     }
     if (exercicesTermines < 0 || totalExercices < 0) {
+        console.log("(┬┬﹏┬┬) le nombre d'exercices ne peut pas être négatif.")
         return false;
     }
     if (exercicesTermines > totalExercices) {
+        console.log("(┬┬﹏┬┬) les exercices terminés ne peuvent pas dépasser le total")
         return false;
     }
 
     if (typeof challengeTermine !== "boolean") {
+        console.log("( •̀ .̫ •́ )✧ entrer true or false")
         return false;
     }
     return true;
@@ -452,13 +456,13 @@ function menu() {
                         ) {
 
                             console.log(
-                                "Apprenant ajouté avec succès."
+                                "Apprenant ajouté avec succès.(〃￣︶￣)人(￣︶￣〃)"
                             );
 
                         } else {
 
                             console.log(
-                                "Erreur : cet ID existe déjà."
+                                "Erreur : cet ID existe déjà.(┬┬﹏┬┬)"
                             );
                         }
 
@@ -574,7 +578,7 @@ function menu() {
                                 function(totalExercices) {
 
                                     rl.question(
-                                        "Challenge ? oui/non : ",
+                                        "Challenge ? true/false : ",
                                         function(challenge) {
 
                                             id = Number(id);
@@ -594,7 +598,7 @@ function menu() {
                                             challenge =
                                                 challenge
                                                     .toLowerCase()
-                                                    === "oui";
+                                                    === "true";
 
 
                                             if (
