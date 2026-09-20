@@ -191,19 +191,19 @@ function calculerProgression(apprenant) {
 
 // 7. FILTRER PAR NIVEAU
 
-function filtrerParNiveau() {
-
+function filtrerParNiveau(niveau) {
     let resultat = [];
 
     for (let i = 0; i < apprenants.length; i++) {
-        let progression =calculerProgression(apprenants[i]);
+        let progression = calculerProgression(apprenants[i]);
 
-        if (progression.niveau === "Solide") {
-            resultat.push( apprenants[i].nomComplet+"  " + progression.niveau);}
-        else if (progression.niveau === "En progression") {
-            resultat.push( apprenants[i].nomComplet+"  " + progression.niveau );}
-            else { resultat.push(apprenants[i].nomComplet+"  " + progression.niveau);}
+        if (progression.niveau === niveau) {
+            resultat.push(
+                apprenants[i].nomComplet + " - " + progression.niveau
+            );
+        }
     }
+
     return resultat;
 }
 
@@ -254,7 +254,7 @@ function afficherListe(liste) {
 
         let progression = calculerProgression(liste[i]);
 
-        console.log( liste[i].id + " - " + liste[i].nomComplet + " - " + progression.progression + "%  -" +progression.niveau );
+        console.log( liste[i].id + " - " + liste[i].nomComplet + " - " + progression.progression + "%  - " +progression.niveau );
     }
 }
 
@@ -299,6 +299,7 @@ function afficherTableauDeBord() {
 
         moyenneProgression = Math.round( sommeProgression / apprenants.length);
     }
+
     console.log( "Progression moyenne :", moyenneProgression + "%");
 
     console.log("\n--- NIVEAUX ---");
@@ -521,4 +522,5 @@ rl.question("\nChoix : ", function(choix) {
 
 
 // DEMARRER LE PROGRAMME
-menu();}
+menu();
+}
