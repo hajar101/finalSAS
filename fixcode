@@ -232,33 +232,28 @@ else {console.log(" données invalides.");}
             });
             break;
 
-        case "6":
-            rl.question("Nom à rechercher : ", function(nom) {
-                let resultat = rechercherApprenant(nom);
-                console.log("\n--- RESULTAT DE RECHERCHE ---");
-                afficherListe(resultat);
-                menu();
-            });
-            break;
+ case "6":
+  rl.question("Nom à rechercher : ", function(nom) {
+  let resultat = rechercherApprenant(nom);
+  console.log("\n--- RESULTAT DE RECHERCHE ---");
+  afficherListe(resultat);
+  menu();
+   });
+   break;
 
-        case "7":
-    console.log("\n--- FILTRE PAR NIVEAU ---");
-
-    let niveaux = ["Solide", "En progression", "À renforcer"];
-
-    for (let i = 0; i < niveaux.length; i++) {
-        let resultatNiveau = filtrerParNiveau(niveaux[i]);
-
-        for (let j = 0; j < resultatNiveau.length; j++) {
-            console.log(resultatNiveau[j]);
-        }
-    }
-
-    menu();
-    break;
+ case "7":
+ console.log("\n--- FILTRE PAR NIVEAU ---");
+ let niveaux = ["Solide", "En progression", "À renforcer"];
+ for (let i = 0; i < niveaux.length; i++) {
+ let resultatNiveau = filtrerParNiveau(niveaux[i]);
+ for (let j = 0; j < resultatNiveau.length; j++) {
+ console.log(resultatNiveau[j]);}
+}
+ menu();
+break;
 
 case "8":
- console.log("\n--- TRI PAR PROGRESSION ---");
+console.log("\n--- TRI PAR PROGRESSION ---");
 afficherListe(trierParProgression());
  menu();
 break;
