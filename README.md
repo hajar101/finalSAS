@@ -12,6 +12,13 @@ Un petit projet JavaScript pour suivre la progression des apprenants.
 * 📈 Trier les résultats
 * 🖥️ Afficher un tableau de bord
 
+🛠️ FUNCTIONS UTILISÉES
+
+normaliserNom() • validerResultat() • ajouterApprenant() • enregistrerResultat()
+rechercherApprenant() • calculerProgression() • filtrerParNiveau()
+trierParProgression() • trierParNom() • afficherListe()
+afficherTableauDeBord() • menu()
+
 > Petit projet, grandes lignes de code.
 
 **Made with JavaScript ☕**
