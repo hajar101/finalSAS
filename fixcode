@@ -106,3 +106,35 @@ console.log( liste[i].id + " - " + liste[i].nomComplet + " - " + progression.pro
 }
 
 
+function affichertablbord() {
+console.log("\n===== TABLEAU DE BORD =====");
+console.log("Nombre d'apprenants :",apprenants.length);
+let sommeProgression = 0; let nombresolide = 0;let nombreprogression = 0;let nombrerenforcer = 0;
+for (let i = 0; i < apprenants.length; i++) {
+let progression = calculerprogression(apprents[i]);
+sommeprogression += progression.progression;
+if (progression.niveau === "Solide") {nombresolide++;}
+else if (progression.niveau === "En progression") { nombreprogression++;} 
+else {nombrerenforcer++;}
+}
+let moyenneprogression = 0;
+if (apprenants.length > 0) {
+moyenneprogression = Math.round( sommeprogression / apprents.length);}
+console.log( "Progression moyenne :", moyenneprogression + "%");
+console.log("\n--- NIVEAUX ---");
+console.log("Solide :",nombresolide);
+console.log("En progression :",nombreprogression);
+console.log("À renforcer :",nombrerenforcer);
+console.log("\n--- APPRENANTS ---");
+let liste = trierParProgression();
+for (let i = 0; i < liste.length; i++) {
+let progression = calculerProgression(liste[i]);
+let joursManquants = 7 - progression.journeesRenseignees;
+console.log( liste[i].nomComplet + " - " + progression.progression + "% - " + progression.niveau);
+console.log( "  Jours renseignés :", progression.journeesRenseignees);
+console.log("  Jours manquants :",joursManquants);
+console.log("  Challenges terminés :",progression.challengesTermines);}
+}
+
+
+
