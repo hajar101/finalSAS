@@ -1,4 +1,5 @@
- 
+const readline = require("readline");
+
 function normaliserlenom(nom){
 return nom.trim().replace(/\s+/g," ").toLower();}
 
