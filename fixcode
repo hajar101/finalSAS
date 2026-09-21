@@ -141,7 +141,7 @@ const rl = readline.createInterface({
 input: process.stdin, output: process.stdout });
 
 function menu() {
-console.log("......SAS PROGRESS CONSOLE........\n" +
+console.log("..._...Sas Progress Console..._.....\n" +
 "1... Afficher le tableau de bord\n" +
 "2... Afficher la liste des apprenants\n" +
 "3... Ajouter un apprenant\n" +
@@ -183,3 +183,100 @@ menu();
 });
 });
 break;
+
+case "4":
+rl.question("ID : ", function(id) {
+id = Number(id);
+let trouve = false;
+for (let i = 0; i < apprenants.length; i++) {
+if (apprents[i].id === id) {
+trouve = true;
+let progression = calculerprogression(apprents[i]);
+console.log(
+ "\n--- APPRENANT ---\n" +
+"ID : " + apprenants[i].id + "\n" +
+"Nom : " + apprenants[i].nomComplet + "\n" +
+ "Ville : " + apprenants[i].ville + "\n" +
+ "Exercices termins : " + progression.exercicesTermines + "\n" +
+ "Total exercices : " + progression.totalExercices + "\n" +
+"Progression : " + progression.progression + "%\n" +
+"Challenges termines : " + progression.challengesTermines + "\n" +
+ "Journées renseignées : " + progression.journeesRenseignees + "\n" +
+"Niveau : " + progression.niveau ); }}
+
+if (!trouve) {
+console.log("Apprenant introuvable.");}
+menu();
+});
+break;
+
+case "5":
+rl.question("ID : ", function(id) {
+rl.question("Jour (1-7) : ", function(jour) {
+rl.question("Exercices terminés : ", function(exercicesTermines) {
+rl.question("Total exercices : ", function(totalExercices) {
+rl.question("Challenge ? true/false : ", function(challenge) {
+
+id = Number(id);
+jour = Number(jour);
+ exercicesTermines = Number(exercicesTermines);
+ totalExercices = Number(totalExercices);
+ challenge = challenge.toLowerCase() === "true";
+if (enregistrerresultat( id,jour,exercicestermines,totalexercices,challenge)) {
+console.log("Résultat enregistré avec succès.");} 
+else {console.log(" données invalides.");}
+ menu();});
+                        });
+                    });
+                });
+            });
+            break;
+
+        case "6":
+            rl.question("Nom à rechercher : ", function(nom) {
+                let resultat = rechercherApprenant(nom);
+                console.log("\n--- RESULTAT DE RECHERCHE ---");
+                afficherListe(resultat);
+                menu();
+            });
+            break;
+
+        case "7":
+    console.log("\n--- FILTRE PAR NIVEAU ---");
+
+    let niveaux = ["Solide", "En progression", "À renforcer"];
+
+    for (let i = 0; i < niveaux.length; i++) {
+        let resultatNiveau = filtrerParNiveau(niveaux[i]);
+
+        for (let j = 0; j < resultatNiveau.length; j++) {
+            console.log(resultatNiveau[j]);
+        }
+    }
+
+    menu();
+    break;
+
+case "8":
+ console.log("\n--- TRI PAR PROGRESSION ---");
+afficherListe(trierParProgression());
+ menu();
+break;
+
+case "9":
+console.log("\n--- TRI PAR NOM ---");
+afficherListe(trierParNom());
+menu();
+break;
+
+case "0":
+console.log("\nAu revoir !");
+rl.close();
+break;
+
+ default:
+console.log("Choix invalide.");
+menu();}
+});
+
+menu();
