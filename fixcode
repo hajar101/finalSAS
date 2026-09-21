@@ -152,3 +152,16 @@ console.log("......SAS PROGRESS CONSOLE........\n" +
 "8... Trier par progression décroissante\n" +
 "9... Trier par ordre alphabétique\n" +
 "0... Quitter");}
+
+rl.question("\n votre choix ?... \n : ", function(choix) {
+switch (choix) {
+case "1":
+afficherTableauDeBord();
+menu();
+break;
+
+case "2":
+console.log("\n  ..liste des apprents..........");
+afficherliste(apprents);
+menu();
+break;
