@@ -20,13 +20,18 @@ resultats:[]; }
 
 function enregistreresulta(id,jour,exercicestermines,totalexercices,challengeverifier){
 if(!validerlesresultat(jour,exercicestermines,totalexercices,challengeverifier)){
-return false;
-}
+return false;}
 for(let i=0;i<apprents.length;i++){if(apprents[i].id===id){
 for (let j = 0; j < apprents[i].resultats.length; j++) {
 if (apprents[i].resultats[j].jour === jour) {
 apprents[i].resultats[j].exercicestermines = exercicestermines;
 apprents[i].resultats[j].totalexercices = totalexercices;
 apprents[i].resultats[j].challengeverifier = challengeverifier;
-}
-return true;
+return true;}}
+apprents[i].resultats.push({
+jour:jour,
+exercicestermines:exercicestermines,
+totalexercices:totalexercices,
+challengeverifier:challengeverifier,});
+return true;}}
+return false;}
