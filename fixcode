@@ -44,31 +44,47 @@ if ( apprenants[i].nomComplet.includes( nom.toLowerCase() )) {resultat.push(appr
 return resultat;
 }
 
-function calculerProgression(apprenant) {
+function calculerprogression(apprenant) {
 let exercicesTermines = 0;
 let totalExercices = 0;
-let challengesTermines = 0;
-let journeesRenseignees = 0;
+let challengevalider = 0;
+let jourenseignees = 0;
 for (let i = 0; i < apprenant.resultats.length; i++) {
-exercicesTermines += apprenant.resultats[i].exercicesTermines;
-totalExercices += apprenant.resultats[i].totalExercices;
-if (apprenant.resultats[i].challengeTermine) {
-    challengesTermines++;}
-    journeesRenseignees++;}
+exercicestermines += apprenant.resultats[i].exercicestermines;
+totalexercices += apprenant.resultats[i].totalexercices;
+if (apprenant.resultats[i].challengevalider) {
+    challengevalider++;}
+    jourenseignees++;}
 
     let progression = 0;
-if (totalExercices > 0) {progression = Math.round( (exercicesTermines / totalExercices) * 100 );}
+if (totalexercices > 0) {progression = Math.round( (exercicestermines / totalexercices) * 100 );}
 
-    let niveau;
+let niveau;
 if (progression >= 80) {niveau = "Solide";} 
 else if (progression >= 50) {niveau = "En progression";}
 else {niveau = "À renforcer";}
-return {exercicesTermines: exercicesTermines,
-        totalExercices: totalExercices,
+return {exercicestermines: exercicestermines,
+        totalexercices: totalexercices,
         progression: progression,
-        challengesTermines: challengesTermines,
-        journeesRenseignees: journeesRenseignees,
+        challengestermines: challengestermines,
+        jourenseignees: jourenseignees,
         niveau: niveau};
+}
+
+function filtrerparniveau(niveau) {
+let resultat = [];
+for (let i = 0; i < apprenants.length; i++) {
+let progression = calculerProgression(apprenants[i]);
+if (progression.niveau === niveau) {
+resultat.push( apprenants[i].nomComplet + " - " + progression.niveau);}}
+return resultat;
+}
+
+function trierparprogression() {
+let resultat = apprenants.slice();
+resultat.sort(function(a, b) {
+return calculerprogression(b).progression - calculerprogression(a).progression;});
+return resultat;
 }
 
 
