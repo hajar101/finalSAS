@@ -137,4 +137,6 @@ console.log("  Challenges terminés :",progression.challengesTermines);}
 }
 
 
+const rl = readline.createInterface({
+input: process.stdin, output: process.stdout });
 
