@@ -12,6 +12,6 @@ Un petit projet JavaScript pour suivre la progression des apprenants.
 * 📈 Trier les résultats
 * 🖥️ Afficher un tableau de bord
 
-> Petit projet, grandes lignes de code. 🖤
+> Petit projet, grandes lignes de code.
 
-**Made with ☕ & JavaScript**
+**Made with JavaScript ☕**
