@@ -165,3 +165,21 @@ console.log("\n  ..liste des apprents..........");
 afficherliste(apprents);
 menu();
 break;
+
+case "3":
+rl.question("id : ", function(id) {
+rl.question("nom complet : ", function(nomComplet) {
+rl.question("ville : ", function(ville) {
+id = Number(id);
+if (isNaN(id)) {
+console.log("id invalide.");
+menu();
+return;}
+if (ajouterapprenant(id, nomComplet, ville)) {
+console.log("Apprenant ajouté avec succès.");}
+else {console.log("no.. id existe déjà.(┬┬﹏┬┬)");}
+menu();
+});
+});
+});
+break;
