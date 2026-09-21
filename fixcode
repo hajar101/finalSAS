@@ -88,4 +88,21 @@ return resultat;
 }
 
 
+function trierparnom() {
+let resultat = apprents.slice();
+resultat.sort(function(a, b) {
+return a.nomComplet.localeCompare( b.nomComplet);});
+return resultat;
+}
+
+
+function afficherliste(liste) {
+if (liste.length === 0) {
+console.log("Aucun apprenant trouvé.");
+return;}
+for (let i = 0; i < liste.length; i++) {
+let progression = calculerProgression(liste[i]);
+console.log( liste[i].id + " - " + liste[i].nomComplet + " - " + progression.progression + "%  - " +progression.niveau );}
+}
+
 
