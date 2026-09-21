@@ -36,3 +36,40 @@ totalexercices:totalexercices,
 challengeverifier:challengeverifier,});
 return true;}}
 return false;}
+
+function rechercherapprenant(nom) {
+let resultat = [];
+for (let i = 0; i < apprenants.length; i++) {
+if ( apprenants[i].nomComplet.includes( nom.toLowerCase() )) {resultat.push(apprenants[i]);}}
+return resultat;
+}
+
+function calculerProgression(apprenant) {
+let exercicesTermines = 0;
+let totalExercices = 0;
+let challengesTermines = 0;
+let journeesRenseignees = 0;
+for (let i = 0; i < apprenant.resultats.length; i++) {
+exercicesTermines += apprenant.resultats[i].exercicesTermines;
+totalExercices += apprenant.resultats[i].totalExercices;
+if (apprenant.resultats[i].challengeTermine) {
+    challengesTermines++;}
+    journeesRenseignees++;}
+
+    let progression = 0;
+if (totalExercices > 0) {progression = Math.round( (exercicesTermines / totalExercices) * 100 );}
+
+    let niveau;
+if (progression >= 80) {niveau = "Solide";} 
+else if (progression >= 50) {niveau = "En progression";}
+else {niveau = "À renforcer";}
+return {exercicesTermines: exercicesTermines,
+        totalExercices: totalExercices,
+        progression: progression,
+        challengesTermines: challengesTermines,
+        journeesRenseignees: journeesRenseignees,
+        niveau: niveau};
+}
+
+
+
