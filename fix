@@ -1,0 +1,584 @@
+const readline = require("readline");
+
+function normaliserlenom(nom) {
+    return nom.trim().replace(/\s+/g, " ").toLowerCase();
+}
+
+function validerlesresultat(jour, exercicestermines, totalexercices, challengeverifier) {
+
+    if (
+        jour < 1 ||
+        jour > 7 ||
+        exercicestermines < 0 ||
+        totalexercices < 0 ||
+        exercicestermines > totalexercices
+    ) {
+        console.log("verifier que le nombre de jour est entre 1 et 7 et totalexercices soit superieur a exercicestermines");
+        return false;
+    }
+
+    return true;
+}
+
+const apprents = [];
+
+function ajouterapprenant(id, nomcomplet, ville) {
+
+    for (let i = 0; i < apprents.length; i++) {
+
+        if (apprents[i].id === id) {
+            return false;
+        }
+    }
+
+    apprents.push({
+        id: id,
+        nomcomplet: normaliserlenom(nomcomplet),
+        ville: ville,
+        resultats: []
+    });
+
+    return true;
+}
+
+function enregistreresultat(id, jour, exercicestermines, totalexercices, challengeverifier) {
+
+    if (!validerlesresultat(jour, exercicestermines, totalexercices, challengeverifier)) {
+        return false;
+    }
+
+    for (let i = 0; i < apprents.length; i++) {
+
+        if (apprents[i].id === id) {
+
+            for (let j = 0; j < apprents[i].resultats.length; j++) {
+
+                if (apprents[i].resultats[j].jour === jour) {
+
+                    apprents[i].resultats[j].exercicestermines = exercicestermines;
+                    apprents[i].resultats[j].totalexercices = totalexercices;
+                    apprents[i].resultats[j].challengeverifier = challengeverifier;
+
+                    return true;
+                }
+            }
+
+            apprents[i].resultats.push({
+                jour: jour,
+                exercicestermines: exercicestermines,
+                totalexercices: totalexercices,
+                challengeverifier: challengeverifier
+            });
+
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function rechercherapprenant(nom) {
+
+    let resultat = [];
+
+    for (let i = 0; i < apprents.length; i++) {
+
+        if (apprents[i].nomcomplet.includes(nom.toLowerCase())) {
+            resultat.push(apprents[i]);
+        }
+    }
+
+    return resultat;
+}
+
+function calculerprogression(apprenant) {
+
+    let exercicestermines = 0;
+    let totalexercices = 0;
+    let challengeverifier = 0;
+    let jourenseignees = 0;
+
+    for (let i = 0; i < apprenant.resultats.length; i++) {
+
+        exercicestermines += apprenant.resultats[i].exercicestermines;
+        totalexercices += apprenant.resultats[i].totalexercices;
+
+        if (apprenant.resultats[i].challengeverifier) {
+            challengeverifier++;
+        }
+
+        jourenseignees++;
+    }
+
+    let progression = 0;
+
+    if (totalexercices > 0) {
+        progression = Math.round(
+            (exercicestermines / totalexercices) * 100
+        );
+    }
+
+    let niveau;
+
+    if (progression >= 80) {
+        niveau = "Solide";
+    }
+    else if (progression >= 50) {
+        niveau = "En progression";
+    }
+    else {
+        niveau = "À renforcer";
+    }
+
+    return {
+        exercicestermines: exercicestermines,
+        totalexercices: totalexercices,
+        progression: progression,
+        challengeverifier: challengeverifier,
+        jourenseignees: jourenseignees,
+        niveau: niveau
+    };
+}
+
+function filtrerparniveau(niveau) {
+
+    let resultat = [];
+
+    for (let i = 0; i < apprents.length; i++) {
+
+        let progression = calculerprogression(apprents[i]);
+
+        if (progression.niveau === niveau) {
+            resultat.push(
+                apprents[i].nomcomplet + " - " + progression.niveau
+            );
+        }
+    }
+
+    return resultat;
+}
+
+function trierparprogression() {
+
+    let resultat = apprents.slice();
+
+    resultat.sort(function(a, b) {
+
+        return calculerprogression(b).progression -
+               calculerprogression(a).progression;
+
+    });
+
+    return resultat;
+}
+
+function trierparnom() {
+
+    let resultat = apprents.slice();
+
+    resultat.sort(function(a, b) {
+
+        return a.nomcomplet.localeCompare(b.nomcomplet);
+
+    });
+
+    return resultat;
+}
+
+function afficherliste(liste) {
+
+    if (liste.length === 0) {
+        console.log("Aucun apprenant trouvé.");
+        return;
+    }
+
+    for (let i = 0; i < liste.length; i++) {
+
+        let progression = calculerprogression(liste[i]);
+
+        console.log(
+            liste[i].id +
+            " - " +
+            liste[i].nomcomplet +
+            " - " +
+            progression.progression +
+            "% - " +
+            progression.niveau
+        );
+    }
+}
+
+function affichertablbord() {
+
+    console.log("\n===== TABLEAU DE BORD =====");
+
+    console.log("Nombre d'apprenants :", apprents.length);
+
+    let sommeprogression = 0;
+    let nombresolide = 0;
+    let nombreprogression = 0;
+    let nombrerenforcer = 0;
+
+    for (let i = 0; i < apprents.length; i++) {
+
+        let progression = calculerprogression(apprents[i]);
+
+        sommeprogression += progression.progression;
+
+        if (progression.niveau === "Solide") {
+            nombresolide++;
+        }
+        else if (progression.niveau === "En progression") {
+            nombreprogression++;
+        }
+        else {
+            nombrerenforcer++;
+        }
+    }
+
+    let moyenneprogression = 0;
+
+    if (apprents.length > 0) {
+        moyenneprogression = Math.round(
+            sommeprogression / apprents.length
+        );
+    }
+
+    console.log("Progression moyenne :", moyenneprogression + "%");
+
+    console.log("\n--- NIVEAUX ---");
+
+    console.log("Solide :", nombresolide);
+    console.log("En progression :", nombreprogression);
+    console.log("À renforcer :", nombrerenforcer);
+
+    console.log("\n--- APPRENANTS ---");
+
+    let liste = trierparprogression();
+
+    for (let i = 0; i < liste.length; i++) {
+
+        let progression = calculerprogression(liste[i]);
+
+        let joursmanquants =
+            7 - progression.jourenseignees;
+
+        console.log(
+            liste[i].nomcomplet +
+            " - " +
+            progression.progression +
+            "% - " +
+            progression.niveau
+        );
+
+        console.log(
+            "  Jours renseignés : " +
+            progression.jourenseignees
+        );
+
+        console.log(
+            "  Jours manquants : " +
+            joursmanquants
+        );
+
+        console.log(
+            "  Challenges terminés : " +
+            progression.challengeverifier
+        );
+    }
+}
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+function menu() {
+
+    console.log(
+        "..._...Sas Progress Console..._.....\n" +
+        "1... Afficher le tableau de bord\n" +
+        "2... Afficher la liste des apprenants\n" +
+        "3... Ajouter un apprenant\n" +
+        "4... Consulter un apprenant par identifiant\n" +
+        "5... Ajouter ou modifier un résultat\n" +
+        "6... Rechercher un apprenant par nom\n" +
+        "7... Filtrer les apprenants par niveau\n" +
+        "8... Trier par progression décroissante\n" +
+        "9... Trier par ordre alphabétique\n" +
+        "0... Quitter"
+    );
+}
+
+function lancerMenu() {
+
+    menu();
+
+    rl.question("\n votre choix ?... \n : ", function(choix) {
+
+        switch (choix) {
+
+            case "1":
+
+                affichertablbord();
+                lancerMenu();
+
+                break;
+
+
+            case "2":
+
+                console.log("\n  ..liste des apprents..........");
+
+                afficherliste(apprents);
+
+                lancerMenu();
+
+                break;
+
+
+            case "3":
+
+                rl.question("id : ", function(id) {
+
+                    rl.question("nom complet : ", function(nomcomplet) {
+
+                        rl.question("ville : ", function(ville) {
+
+                            id = Number(id);
+
+                            if (isNaN(id)) {
+
+                                console.log("id invalide.");
+                                lancerMenu();
+                                return;
+                            }
+
+                            if (ajouterapprenant(id, nomcomplet, ville)) {
+
+                                console.log(
+                                    "Apprenant ajouté avec succès.(〃￣︶￣)人(￣︶￣〃)"
+                                );
+
+                            }
+                            else {
+
+                                console.log(
+                                    "no.. id existe déjà.(┬┬﹏┬┬)"
+                                );
+                            }
+
+                            lancerMenu();
+                        });
+                    });
+                });
+
+                break;
+
+
+            case "4":
+
+                rl.question("ID : ", function(id) {
+
+                    id = Number(id);
+
+                    let trouve = false;
+
+                    for (let i = 0; i < apprents.length; i++) {
+
+                        if (apprents[i].id === id) {
+
+                            trouve = true;
+
+                            let progression =
+                                calculerprogression(apprents[i]);
+
+                            console.log(
+                                "\n--- APPRENANT ---\n" +
+                                "ID : " + apprents[i].id + "\n" +
+                                "Nom : " + apprents[i].nomcomplet + "\n" +
+                                "Ville : " + apprents[i].ville + "\n" +
+                                "Exercices termins : " +
+                                progression.exercicestermines + "\n" +
+                                "Total exercices : " +
+                                progression.totalexercices + "\n" +
+                                "Progression : " +
+                                progression.progression + "%\n" +
+                                "Challenges termines : " +
+                                progression.challengeverifier + "\n" +
+                                "Journées renseignées : " +
+                                progression.jourenseignees + "\n" +
+                                "Niveau : " +
+                                progression.niveau
+                            );
+                        }
+                    }
+
+                    if (!trouve) {
+                        console.log("Apprenant introuvable.");
+                    }
+
+                    lancerMenu();
+                });
+
+                break;
+
+
+            case "5":
+
+                rl.question("ID : ", function(id) {
+
+                    rl.question("Jour (1-7) : ", function(jour) {
+
+                        rl.question(
+                            "Exercices terminés : ",
+                            function(exercicestermines) {
+
+                                rl.question(
+                                    "Total exercices : ",
+                                    function(totalexercices) {
+
+                                        rl.question(
+                                            "Challenge ? true/false : ",
+                                            function(challenge) {
+
+                                                id = Number(id);
+                                                jour = Number(jour);
+                                                exercicestermines =
+                                                    Number(exercicestermines);
+                                                totalexercices =
+                                                    Number(totalexercices);
+
+                                                challenge =
+                                                    challenge.toLowerCase() === "true";
+
+                                                if (
+                                                    enregistreresultat(
+                                                        id,
+                                                        jour,
+                                                        exercicestermines,
+                                                        totalexercices,
+                                                        challenge
+                                                    )
+                                                ) {
+
+                                                    console.log(
+                                                        "Résultat enregistré avec succès."
+                                                    );
+
+                                                }
+                                                else {
+
+                                                    console.log(
+                                                        "données invalides."
+                                                    );
+                                                }
+
+                                                lancerMenu();
+                                            }
+                                        );
+                                    }
+                                );
+                            }
+                        );
+                    });
+                });
+
+                break;
+
+
+            case "6":
+
+                rl.question(
+                    "Nom à rechercher : ",
+                    function(nom) {
+
+                        let resultat =
+                            rechercherapprenant(nom);
+
+                        console.log(
+                            "\n--- RESULTAT DE RECHERCHE ---"
+                        );
+
+                        afficherliste(resultat);
+
+                        lancerMenu();
+                    }
+                );
+
+                break;
+
+
+            case "7":
+
+                console.log(
+                    "\n--- FILTRE PAR NIVEAU ---"
+                );
+
+                let niveaux = [
+                    "Solide",
+                    "En progression",
+                    "À renforcer"
+                ];
+
+                for (let i = 0; i < niveaux.length; i++) {
+
+                    let resultatNiveau =
+                        filtrerparniveau(niveaux[i]);
+
+                    for (let j = 0; j < resultatNiveau.length; j++) {
+
+                        console.log(resultatNiveau[j]);
+                    }
+                }
+
+                lancerMenu();
+
+                break;
+
+
+            case "8":
+
+                console.log(
+                    "\n--- TRI PAR PROGRESSION ---"
+                );
+
+                afficherliste(trierparprogression());
+
+                lancerMenu();
+
+                break;
+
+
+            case "9":
+
+                console.log(
+                    "\n--- TRI PAR NOM ---"
+                );
+
+                afficherliste(trierparnom());
+
+                lancerMenu();
+
+                break;
+
+
+            case "0":
+
+                console.log("\nAu revoir !");
+
+                rl.close();
+
+                break;
+
+
+            default:
+
+                console.log("Choix invalide.");
+
+                lancerMenu();
+        }
+    });
+}
+
+lancerMenu();
