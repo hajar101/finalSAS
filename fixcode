@@ -1,0 +1,16 @@
+ 
+function normaliserlenom(nom){
+return nom.trim().replace(/\s+/g," ").toLower();}
+
+function validerlesresultat(jour,exercicestermines,totalexercices,challengeverifier){
+if(jour<1||jour>7||exercicestermines< 0|| totalexercices<0 || exercicestermines > totalexercices) {
+console.log("verfier que le nombre de jour est entre 1 et 7 et totalexercices soit superieur a exercicestermins");
+return false;}
+return true;}
+
+const apprents=[];
+function ajouterapprenant(id,nomcomplet,ville){
+for(let i=0,i<apprents.length,i++){
+if(apprents[i].id===id){return false;}
+} apprenants.push
+
