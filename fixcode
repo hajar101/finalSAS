@@ -11,15 +11,15 @@ return true;}
 
 const apprents=[];
 function ajouterapprenant(id,nomcomplet,ville){
-for(let i=0,i<apprents.length,i++){
+for(let i=0;i<apprents.length;i++){
 if(apprents[i].id===id){return false;}
 } apprenants.push({
 id:id,
 nomcomplet:normaliserlenom(nomcomplet),
 ville:ville,
-resultats:[]; }
+resultats:[] }
 
-function enregistreresulta(id,jour,exercicestermines,totalexercices,challengeverifier){
+function enregistreresultat(id,jour,exercicestermines,totalexercices,challengeverifier){
 if(!validerlesresultat(jour,exercicestermines,totalexercices,challengeverifier)){
 return false;}
 for(let i=0;i<apprents.length;i++){if(apprents[i].id===id){
