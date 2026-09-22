@@ -10,9 +10,9 @@ Un petit projet pour suivre la progression des apprenants.
   
  FUNCTIONS UTILISÉES:
 
-normaliserNom() • validerResultat() • ajouterApprenant() • enregistrerResultat()
-rechercherApprenant() • calculerProgression() • filtrerParNiveau()
-trierParProgression() • trierParNom() • afficherListe()
-afficherTableauDeBord() • menu()
+normalisernom() • validerresultat() • ajouterapprenant() • enregistreresultat()
+rechercherapprenant() • calculerprogression() • filtrerparniveau()
+trierparprogression() • trierparnom() • afficherliste()
+affichertablbord() • menu()
 
 **Made with JavaScript ☕**
