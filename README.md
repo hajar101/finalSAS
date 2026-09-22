@@ -1,4 +1,4 @@
-# 🦇 SAS Progress Console
+#  SAS Progress Console
 
 Un petit projet pour suivre la progression des apprenants.
 ### Ce que ça fait
@@ -8,7 +8,7 @@ Un petit projet pour suivre la progression des apprenants.
 * 📈 Trier les résultats
 * 🖥️ Afficher un tableau de bord
   
-🛠️ FUNCTIONS UTILISÉES:
+ FUNCTIONS UTILISÉES:
 
 normaliserNom() • validerResultat() • ajouterApprenant() • enregistrerResultat()
 rechercherApprenant() • calculerProgression() • filtrerParNiveau()
