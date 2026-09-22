@@ -125,7 +125,7 @@ let moyenneprogression = 0;
 if (apprents.length > 0) {
 moyenneprogression = Math.round( sommeprogression / apprents.length);}
 console.log( "Progression moyenne :", moyenneprogression + "%");
-console.log("\n--- NIVEAUX ---");
+console.log("\n..   Niveau  ..");
 console.log("Solide :",nombresolide);
 console.log("En progression :",nombreprogression);
 console.log("À renforcer :",nombrerenforcer);
@@ -146,16 +146,16 @@ input: process.stdin, output: process.stdout });
 
 function menu() {
 console.log("..._...Sas Progress Console..._.....\n" +
-"1... Afficher le tableau de bord\n" +
-"2... Afficher la liste des apprenants\n" +
-"3... Ajouter un apprenant\n" +
-"4... Consulter un apprenant par identifiant\n" +
-"5... Ajouter ou modifier un résultat\n" +
-"6... Rechercher un apprenant par nom\n" +
-"7... Filtrer les apprenants par niveau\n" +
-"8... Trier par progression décroissante\n" +
-"9... Trier par ordre alphabétique\n" +
-"0... Quitter");}
+"1 Afficher le tableau de bord\n" +
+"2 Afficher la liste des apprenants\n" +
+"3 Ajouter un apprenant\n" +
+"4 Consulter un apprenant par identifiant\n" +
+"5 Ajouter ou modifier un résultat\n" +
+"6 Rechercher un apprenant par nom\n" +
+"7 Filtrer les apprenants par niveau\n" +
+"8 Trier par progression décroissante\n" +
+"9 Trier par ordre alphabétique\n" +
+"0 Quitter");}
 
 rl.question("\n votre choix ?... \n : ", function(choix) {
 switch (choix) {
