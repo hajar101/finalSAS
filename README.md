@@ -7,6 +7,7 @@ Un petit projet pour suivre la progression des apprenants.
 * 🔎 Rechercher et filtrer
 * 📈 Trier les résultats
 * 🖥️ Afficher un tableau de bord
+  
 🛠️ FUNCTIONS UTILISÉES:
 normaliserNom() • validerResultat() • ajouterApprenant() • enregistrerResultat()
 rechercherApprenant() • calculerProgression() • filtrerParNiveau()
