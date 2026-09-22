@@ -185,7 +185,7 @@ console.log("id invalide.");
 menu();
 return;}
 if (ajouterapprenant(id, nomcomplet, ville)) {
-console.log("Apprenant est ajouté;}
+console.log("Apprenant est ajouté");}
 else {console.log("no.. id existe déjà.");}
 menu();
 });
@@ -274,7 +274,7 @@ menu();
 break;
 
 case "9":
-console.log("\n--- TRI PAR NOM ---");
+console.log("\n.....Tri par nom.....");
 afficherliste(trierparnom());
 menu();
 break;
