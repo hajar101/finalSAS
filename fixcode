@@ -1,7 +1,7 @@
 const readline = require("readline");
 // 
 function normaliserlenom(nom){
-return nom.trim().replace(/\s+/g," ").toLower();}
+return nom.trim().replace(/\s+/g," ").toLowerCase();}
 // 
 function validerlesresultat(jour,exercicestermines,totalexercices,challengeverifier){
 if(jour<1||jour>7||exercicestermines< 0|| totalexercices<0 || exercicestermines > totalexercices) {
@@ -42,14 +42,14 @@ return false;}
 // 
 function rechercherapprenant(nom) {
 let resultat = [];
-for (let i = 0; i < apprenants.length; i++) {
-if ( apprenants[i].nomComplet.includes( nom.toLowerCase() )) {resultat.push(apprenants[i]);}}
+for (let i = 0; i < apprents.length; i++) {
+if ( apprents[i].nomComplet.includes( nom.toLowerCase() )) {resultat.push(apprents[i]);}}
 return resultat;
 }
 // 
 function calculerprogression(apprenant) {
-let exercicesTermines = 0;
-let totalExercices = 0;
+let exercicestermines = 0;
+let totalexercices = 0;
 let challengevalider = 0;
 let jourenseignees = 0;
 for (let i = 0; i < apprenant.resultats.length; i++) {
@@ -69,22 +69,22 @@ else {niveau = "À renforcer";}
 return {exercicestermines: exercicestermines,
         totalexercices: totalexercices,
         progression: progression,
-        challengestermines: challengestermines,
+        challengevalider: challengevalider,
         jourenseignees: jourenseignees,
         niveau: niveau};
 }
 // 
 function filtrerparniveau(niveau) {
 let resultat = [];
-for (let i = 0; i < apprenants.length; i++) {
-let progression = calculerProgression(apprenants[i]);
+for (let i = 0; i < apprents.length; i++) {
+let progression = calculerProgression(apprents[i]);
 if (progression.niveau === niveau) {
-resultat.push( apprenants[i].nomComplet + " - " + progression.niveau);}}
+resultat.push( apprents[i].nomComplet + " - " + progression.niveau);}}
 return resultat;
 }
 // 
 function trierparprogression() {
-let resultat = apprenants.slice();
+let resultat = apprents.slice();
 resultat.sort(function(a, b) {
 return calculerprogression(b).progression - calculerprogression(a).progression;});
 return resultat;
@@ -111,8 +111,8 @@ console.log( liste[i].id + " - " + liste[i].nomComplet + " - " + progression.pro
 // 
 function affichertablbord() {
 console.log("\n===== TABLEAU DE BORD =====");
-console.log("Nombre d'apprenants :",apprenants.length);
-let sommeProgression = 0; let nombresolide = 0;let nombreprogression = 0;let nombrerenforcer = 0;
+console.log("nombre d'apprents :",apprents.length);
+let sommeprogression = 0; let nombresolide = 0;let nombreprogression = 0;let nombrerenforcer = 0;
 for (let i = 0; i < apprenants.length; i++) {
 let progression = calculerprogression(apprents[i]);
 sommeprogression += progression.progression;
@@ -121,22 +121,22 @@ else if (progression.niveau === "En progression") { nombreprogression++;}
 else {nombrerenforcer++;}
 }
 let moyenneprogression = 0;
-if (apprenants.length > 0) {
+if (apprents.length > 0) {
 moyenneprogression = Math.round( sommeprogression / apprents.length);}
 console.log( "Progression moyenne :", moyenneprogression + "%");
 console.log("\n--- NIVEAUX ---");
 console.log("Solide :",nombresolide);
 console.log("En progression :",nombreprogression);
 console.log("À renforcer :",nombrerenforcer);
-console.log("\n--- APPRENANTS ---");
-let liste = trierParProgression();
+console.log("\n....Apprents....");
+let liste = trierparprogression();
 for (let i = 0; i < liste.length; i++) {
 let progression = calculerProgression(liste[i]);
-let joursManquants = 7 - progression.journeesRenseignees;
+let joursManquants = 7 - progression.jourenseignees;
 console.log( liste[i].nomComplet + " - " + progression.progression + "% - " + progression.niveau);
-console.log( "  Jours renseignés :", progression.journeesRenseignees);
+console.log( "  Jours renseignés :", progression.jourenseignees);
 console.log("  Jours manquants :",joursManquants);
-console.log("  Challenges terminés :",progression.challengesTermines);}
+console.log("  Challenges terminés :",progression.challengevalider);}
 }
 
 // 
@@ -171,14 +171,14 @@ break;
 
 case "3":
 rl.question("id : ", function(id) {
-rl.question("nom complet : ", function(nomComplet) {
+rl.question("nom complet : ", function(nomcomplet) {
 rl.question("ville : ", function(ville) {
 id = Number(id);
 if (isNaN(id)) {
 console.log("id invalide.");
 menu();
 return;}
-if (ajouterapprenant(id, nomComplet, ville)) {
+if (ajouterapprenant(id, nomcomplet, ville)) {
 console.log("Apprenant ajouté avec succès.(〃￣︶￣)人(￣︶￣〃)");}
 else {console.log("no.. id existe déjà.(┬┬﹏┬┬)");}
 menu();
@@ -191,15 +191,15 @@ case "4":
 rl.question("ID : ", function(id) {
 id = Number(id);
 let trouve = false;
-for (let i = 0; i < apprenants.length; i++) {
+for (let i = 0; i < apprents.length; i++) {
 if (apprents[i].id === id) {
 trouve = true;
 let progression = calculerprogression(apprents[i]);
 console.log(
  "\n....Apprenets....\n" +
-"ID : " + apprenants[i].id + "\n" +
-"Nom : " + apprenants[i].nomComplet + "\n" +
- "Ville : " + apprenants[i].ville + "\n" +
+"ID : " + apprents[i].id + "\n" +
+"Nom : " + apprents[i].nomcomplet + "\n" +
+ "Ville : " + apprents[i].ville + "\n" +
  "Exercices termins : " + progression.exercicestermines + "\n" +
  "Total exercices : " + progression.totalexercices + "\n" +
 "Progression : " + progression.progression + "%\n" +
@@ -235,12 +235,12 @@ else {console.log(" données invalides.");}
             });
             break;
 
-        case "6":
-            rl.question("Nom à rechercher : ", function(nom) {
-                let resultat = rechercherApprenant(nom);
-                console.log("\n.....Resultat de Recherche....");
-                afficherListe(resultat);
-                menu();
+  case "6":
+     rl.question("Nom à rechercher : ", function(nom) {
+       let resultat = rechercherApprenant(nom);
+          console.log("\n.....Resultat de Recherche....");
+          afficherListe(resultat);
+      menu();
             });
             break;
 
@@ -250,10 +250,10 @@ else {console.log(" données invalides.");}
     let niveaux = ["solide", "en progression", "a renforcer"];
 
     for (let i = 0; i < niveaux.length; i++) {
-        let resultatNiveau = filtrerParNiveau(niveaux[i]);
+        let resultatNiveau = filtrerparniveau(niveaux[i]);
 
         for (let j = 0; j < resultatNiveau.length; j++) {
-            console.log(resultatNiveau[j]);
+            console.log(resultatniveau[j]);
         }
     }
 
@@ -268,7 +268,7 @@ break;
 
 case "9":
 console.log("\n--- TRI PAR NOM ---");
-afficherListe(trierparNom());
+afficherListe(trierparnom());
 menu();
 break;
 
