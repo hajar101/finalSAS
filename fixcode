@@ -155,7 +155,7 @@ console.log("..._...Sas Progress Console..._.....\n" +
 "7 Filtrer les apprenants par niveau\n" +
 "8 Trier par progression décroissante\n" +
 "9 Trier par ordre alphabétique\n" +
-"0 Quitter");}
+"0 Quitter");
 
 rl.question("\n votre choix ?... \n : ", function(choix) {
 switch (choix) {
@@ -282,7 +282,7 @@ break;
 default:
 console.log("Choix invalide!!.");
 menu();}
-});
+});}
 
 menu();
 
