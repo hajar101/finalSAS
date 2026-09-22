@@ -185,8 +185,8 @@ console.log("id invalide.");
 menu();
 return;}
 if (ajouterapprenant(id, nomcomplet, ville)) {
-console.log("Apprenant ajouté avec succès.(〃￣︶￣)人(￣︶￣〃)");}
-else {console.log("no.. id existe déjà.(┬┬﹏┬┬)");}
+console.log("Apprenant est ajouté;}
+else {console.log("no.. id existe déjà.");}
 menu();
 });
 });
