@@ -1,3 +1,4 @@
+```javascript
 const readline = require("readline");
 // 
 function normaliserlenom(nom){
@@ -17,7 +18,8 @@ if(apprents[i].id===id){return false;}
 id:id,
 nomcomplet:normaliserlenom(nomcomplet),
 ville:ville,
-resultats:[] }
+resultats:[]
+});}
 // 
 function enregistreresultat(id,jour,exercicestermines,totalexercices,challengeverifier){
 if(!validerlesresultat(jour,exercicestermines,totalexercices,challengeverifier)){
@@ -43,7 +45,7 @@ return false;}
 function rechercherapprenant(nom) {
 let resultat = [];
 for (let i = 0; i < apprents.length; i++) {
-if ( apprents[i].nomComplet.includes( nom.toLowerCase() )) {resultat.push(apprents[i]);}}
+if (apprents[i].nomcomplet.includes(nom.toLowerCase())) {resultat.push(apprents[i]);}}
 return resultat;
 }
 // 
@@ -55,7 +57,7 @@ let jourenseignees = 0;
 for (let i = 0; i < apprenant.resultats.length; i++) {
 exercicestermines += apprenant.resultats[i].exercicestermines;
 totalexercices += apprenant.resultats[i].totalexercices;
-if (apprenant.resultats[i].challengevalider) {
+if (apprenant.resultats[i].challengeverifier) {
     challengevalider++;}
     jourenseignees++;}
 
@@ -77,9 +79,9 @@ return {exercicestermines: exercicestermines,
 function filtrerparniveau(niveau) {
 let resultat = [];
 for (let i = 0; i < apprents.length; i++) {
-let progression = calculerProgression(apprents[i]);
+let progression = calculerprogression(apprents[i]);
 if (progression.niveau === niveau) {
-resultat.push( apprents[i].nomComplet + " - " + progression.niveau);}}
+resultat.push(apprents[i].nomcomplet + " - " + progression.niveau);}}
 return resultat;
 }
 // 
@@ -94,7 +96,7 @@ return resultat;
 function trierparnom() {
 let resultat = apprents.slice();
 resultat.sort(function(a, b) {
-return a.nomComplet.localeCompare( b.nomComplet);});
+return a.nomcomplet.localeCompare(b.nomcomplet);});
 return resultat;
 }
 
@@ -104,8 +106,8 @@ if (liste.length === 0) {
 console.log("Aucun apprenant trouvé.");
 return;}
 for (let i = 0; i < liste.length; i++) {
-let progression = calculerProgression(liste[i]);
-console.log( liste[i].id + " - " + liste[i].nomComplet + " - " + progression.progression + "%  - " +progression.niveau );}
+let progression = calculerprogression(liste[i]);
+console.log(liste[i].id + " - " + liste[i].nomcomplet + " - " + progression.progression + "%  - " + progression.niveau);}
 }
 
 // 
@@ -113,7 +115,7 @@ function affichertablbord() {
 console.log("\n===== TABLEAU DE BORD =====");
 console.log("nombre d'apprents :",apprents.length);
 let sommeprogression = 0; let nombresolide = 0;let nombreprogression = 0;let nombrerenforcer = 0;
-for (let i = 0; i < apprenants.length; i++) {
+for (let i = 0; i < apprents.length; i++) {
 let progression = calculerprogression(apprents[i]);
 sommeprogression += progression.progression;
 if (progression.niveau === "Solide") {nombresolide++;}
@@ -131,10 +133,10 @@ console.log("À renforcer :",nombrerenforcer);
 console.log("\n....Apprents....");
 let liste = trierparprogression();
 for (let i = 0; i < liste.length; i++) {
-let progression = calculerProgression(liste[i]);
+let progression = calculerprogression(liste[i]);
 let joursManquants = 7 - progression.jourenseignees;
-console.log( liste[i].nomComplet + " - " + progression.progression + "% - " + progression.niveau);
-console.log( "  Jours renseignés :", progression.jourenseignees);
+console.log(liste[i].nomcomplet + " - " + progression.progression + "% - " + progression.niveau);
+console.log("  Jours renseignés :", progression.jourenseignees);
 console.log("  Jours manquants :",joursManquants);
 console.log("  Challenges terminés :",progression.challengevalider);}
 }
@@ -196,15 +198,15 @@ if (apprents[i].id === id) {
 trouve = true;
 let progression = calculerprogression(apprents[i]);
 console.log(
- "\n....Apprenets....\n" +
+"\n....Apprenets....\n" +
 "ID : " + apprents[i].id + "\n" +
 "Nom : " + apprents[i].nomcomplet + "\n" +
- "Ville : " + apprents[i].ville + "\n" +
- "Exercices termins : " + progression.exercicestermines + "\n" +
- "Total exercices : " + progression.totalexercices + "\n" +
+"Ville : " + apprents[i].ville + "\n" +
+"Exercices termins : " + progression.exercicestermines + "\n" +
+"Total exercices : " + progression.totalexercices + "\n" +
 "Progression : " + progression.progression + "%\n" +
 "Challenges termines : " + progression.challengevalider + "\n" +
- "Journées renseignées : " + progression.jourenseignees + "\n" +
+"Journées renseignées : " + progression.jourenseignees + "\n" +
 "Niveau : " + progression.niveau ); }}
 
 if (!trouve) {
@@ -222,64 +224,6 @@ rl.question("Challenge ? true/false : ", function(challenge) {
 
 id = Number(id);
 jour = Number(jour);
- exercicestermines = Number(exercicestermines);
- totalexercices = Number(totalexercices);
- challenge = challenge.toLowerCase() === "true";
-if (enregistrerresultat( id,jour,exercicestermines,totalexercices,challenge)) {
-console.log("Résultat enregistré avec succès.");} 
-else {console.log(" données invalides.");}
- menu();});
-                        });
-                    });
-                });
-            });
-            break;
-
-  case "6":
-     rl.question("Nom à rechercher : ", function(nom) {
-       let resultat = rechercherApprenant(nom);
-          console.log("\n.....Resultat de Recherche....");
-          afficherListe(resultat);
-      menu();
-            });
-            break;
-
-        case "7":
-    console.log("\n.......Filtrer par niveau.....");
-
-    let niveaux = ["solide", "en progression", "a renforcer"];
-
-    for (let i = 0; i < niveaux.length; i++) {
-        let resultatNiveau = filtrerparniveau(niveaux[i]);
-
-        for (let j = 0; j < resultatNiveau.length; j++) {
-            console.log(resultatniveau[j]);
-        }
-    }
-
-    menu();
-    break;
-
-case "8":
- console.log("\n......Tri par progression.....");
-afficherliste(trierparprogression());
- menu();
-break;
-
-case "9":
-console.log("\n--- TRI PAR NOM ---");
-afficherListe(trierparnom());
-menu();
-break;
-
-case "0":
-console.log("\n byyye");
-rl.close();
-break;
-
- default:
-console.log("Choix invalide!!.");
-menu();}
-});
-
-menu();
+exercicestermines = Number(exercicestermines);
+tota
+```
