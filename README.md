@@ -9,6 +9,7 @@ Un petit projet pour suivre la progression des apprenants.
 * 🖥️ Afficher un tableau de bord
   
 🛠️ FUNCTIONS UTILISÉES:
+
 normaliserNom() • validerResultat() • ajouterApprenant() • enregistrerResultat()
 rechercherApprenant() • calculerProgression() • filtrerParNiveau()
 trierParProgression() • trierParNom() • afficherListe()
