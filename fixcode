@@ -13,7 +13,7 @@ const apprents=[];
 function ajouterapprenant(id,nomcomplet,ville){
 for(let i=0;i<apprents.length;i++){
 if(apprents[i].id===id){return false;}
-} apprenants.push({
+} apprents.push({
 id:id,
 nomcomplet:normaliserlenom(nomcomplet),
 ville:ville,
